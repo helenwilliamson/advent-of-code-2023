@@ -3,16 +3,11 @@
   (:require [advent-of-code-2023.utils :as utils]
             [clojure.string :as string]))
 
-
-
 (defn parse-input
   [name]
   (->> (utils/read-input name)
-       (map #(list (re-find #"\d" %1) 
-                   (->> (reverse %1)
-                        (apply str) 
-                        (re-find #"\d"))))
-       (map #(->> (string/join %1)
+       (map #(re-seq #"\d" %1))
+       (map #(->> (list (first %1) (last %1))
+                  string/join
                   Integer/parseInt))
        (reduce +)))
-
